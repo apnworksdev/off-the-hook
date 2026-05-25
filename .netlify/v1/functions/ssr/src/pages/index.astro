@@ -1,0 +1,26 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import NewsletterSignup from '../components/newsletter/NewsletterSignup.astro';
+
+import Logo from '../components/icons/Logo.astro';
+import Dates from '../components/icons/Dates.astro';
+import AsideIcons from '../components/icons/AsideIcons.astro';
+import '../styles/home.css';
+---
+<BaseLayout title="OTH" description="Off the hook">
+	<div class="home-background">
+		<autoplay-video class="bg-media">
+			<img class="bg-poster" data-poster="desktop" src="/images/oth_poster.webp" alt="" loading="eager" decoding="async" />
+			<video class="bg-video" data-video="desktop" muted loop playsinline preload="metadata" aria-hidden="true">
+				<source data-src="/videos/oth_video.mp4" type="video/mp4" />
+			</video>
+		</autoplay-video>
+	</div>
+	<main class="content">
+		<div class="oth-container">
+			<img class="oth-img oth-logo" data-poster="desktop" src="/images/oth_logo.webp" alt="" loading="eager" decoding="async" />
+			<img class="oth-img oth-skepta" data-poster="desktop" src="/images/oth_skepta.webp" alt="" loading="eager" decoding="async" />
+		</div>
+	</main>
+	<script src="/scripts/autoplay-video.js" defer></script>
+</BaseLayout>
