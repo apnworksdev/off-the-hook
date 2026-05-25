@@ -1,0 +1,28 @@
+:root {
+  --1-1: 100%;
+  --2-3: 150%;
+  --3-2: 67%;
+  --3-4: 133%;
+  --4-3: 75%;
+  --3-5: 167%;
+  --5-3: 60%;
+  --9-16: 178%;
+  --16-9: 56.25%;
+
+  --background-color: #000000;
+  --foreground-color: #FFFFFF;
+  --gray-color: #B9B3C7;
+
+  --selection-background-color: transparent;
+  --selection-foreground-color: var(--gray-color);
+
+  --font-family-mono: "CEO Reg", monospace;
+  --font-size-mono: 14px;
+  --line-height-mono: 15px;
+}
+
+@media (max-width: 820px) {
+  :root {
+    --font-size-mono: 12px;
+  }
+}

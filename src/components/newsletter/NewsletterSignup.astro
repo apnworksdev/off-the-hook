@@ -1,0 +1,99 @@
+<div class="newsletter-signup mono" aria-labelledby="newsletter-heading">
+  <form class="newsletter-form" id="newsletter-form" novalidate>
+    <label class="sr-only" for="newsletter-email">Email address</label>
+    <input
+      id="newsletter-email"
+      name="email"
+      type="email"
+      autocomplete="email"
+      required
+      placeholder="enter e-mail address"
+    />
+
+    <label class="newsletter-honeypot sr-only" for="newsletter-company">
+      Company
+      <input id="newsletter-company" name="company" type="text" tabindex="-1" autocomplete="off" />
+    </label>
+
+    <button type="submit" id="newsletter-submit">Submit</button>
+  </form>
+
+  <p class="newsletter-legal sr-only">
+    By subscribing, you agree to Laylo's
+    <a href="https://docs.laylo.com/en/articles/6497431-terms-of-service" target="_blank" rel="noreferrer">Terms</a>
+    and
+    <a href="https://docs.laylo.com/en/articles/6497219-privacy-and-gdpr-policy" target="_blank" rel="noreferrer">Privacy Policy</a>.
+  </p>
+  <p class="newsletter-status" id="newsletter-status" role="status" aria-live="polite"></p>
+</div>
+
+<script is:inline>
+  const form = document.getElementById('newsletter-form');
+  const statusEl = document.getElementById('newsletter-status');
+  const emailInput = document.getElementById('newsletter-email');
+  const companyInput = document.getElementById('newsletter-company');
+  const submitButton = document.getElementById('newsletter-submit');
+
+  if (
+    form instanceof HTMLFormElement &&
+    statusEl &&
+    emailInput instanceof HTMLInputElement &&
+    companyInput instanceof HTMLInputElement &&
+    submitButton instanceof HTMLButtonElement
+  ) {
+    const syncEmailWidth = () => {
+      const valueChars = emailInput.value.length;
+      const placeholderChars = emailInput.placeholder.length;
+      const chars = valueChars === 0
+        ? placeholderChars
+        : Math.min(Math.max(valueChars + 1, 6), 30);
+      emailInput.style.width = `${chars}ch`;
+    };
+
+    syncEmailWidth();
+    emailInput.addEventListener('input', syncEmailWidth);
+
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+
+      const email = emailInput.value.trim();
+      if (!email) {
+        statusEl.textContent = 'Please enter a valid email address.';
+        return;
+      }
+
+      if (companyInput.value.trim()) {
+        statusEl.textContent = 'Thanks! Please check your inbox for confirmation.';
+        form.reset();
+        return;
+      }
+
+      statusEl.textContent = '';
+      submitButton.disabled = true;
+      submitButton.textContent = 'Signing up...';
+
+      try {
+        const response = await fetch('/api/laylo-subscribe', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, company: companyInput.value.trim() })
+        });
+
+        const data = await response.json();
+        if (!response.ok || !data.success) {
+          statusEl.textContent = data.message ?? 'Could not subscribe right now. Please try again.';
+          return;
+        }
+
+        statusEl.textContent = 'Thanks! Please check your inbox for confirmation.';
+        form.reset();
+        syncEmailWidth();
+      } catch {
+        statusEl.textContent = 'Network error. Please try again.';
+      } finally {
+        submitButton.disabled = false;
+        submitButton.textContent = 'Submit';
+      }
+    });
+  }
+</script>

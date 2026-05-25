@@ -1,0 +1,32 @@
+---
+interface Props {
+  width?: number | string;
+  height?: number | string;
+  class?: string;
+  title?: string;
+  viewBox?: string;
+}
+
+const {
+  width,
+  height,
+  class: className,
+  title,
+  viewBox = '0 0 24 24'
+} = Astro.props;
+
+---
+
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  width={width}
+  height={height}
+  viewBox={viewBox}
+  fill="none"
+  class={className}
+  role={title ? 'img' : 'presentation'}
+  aria-hidden={title ? 'false' : 'true'}
+>
+  {title && <title>{title}</title>}
+  <slot />
+</svg>

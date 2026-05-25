@@ -1,0 +1,17 @@
+html {
+  background-color: var(--background-color);
+  color: var(--foreground-color);
+}
+
+body {
+  font-family: var(--font-family-mono);
+  font-size: var(--font-size-mono);
+  line-height: var(--line-height-mono);
+}
+
+.mono {
+  font-family: var(--font-family-mono);
+  font-size: var(--font-size-mono);
+  line-height: var(--line-height-mono);
+  text-transform: uppercase;
+}
