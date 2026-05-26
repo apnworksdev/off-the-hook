@@ -9,9 +9,8 @@ body {
   line-height: var(--line-height-mono);
 }
 
-.mono {
-  font-family: var(--font-family-mono);
-  font-size: var(--font-size-mono);
-  line-height: var(--line-height-mono);
-  text-transform: uppercase;
+@media (max-width: 595px) and (min-height: 595px) {
+  html {
+    overflow: hidden;
+  }
 }
